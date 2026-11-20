@@ -163,6 +163,13 @@ cmd/
 
 Delete `work/`, `.venv/` and `terraform/.terraform*` to reset local files.
 
+## Acknowledgements
+
+- Inspired by the [NextWork](https://nextwork.ai/) project "Threat Detection with GuardDuty"
+  ([project page](https://nextwork.ai/projects/d3694045-8dc9-5910-99bc-061c82f1bccd?track=high)). This lab is an independent
+  local re-interpretation, not NextWork's content: it does not emulate GuardDuty findings or attacks.
+- Runs on [Floci](https://github.com/floci-io/floci), the local AWS emulator.
+
 ## License
 
 [MIT](LICENSE). Educational use only: run it against a local emulator, never against an AWS account you care about.
