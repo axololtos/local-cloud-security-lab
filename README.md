@@ -14,6 +14,10 @@ No AWS account is used. Everything talks to `http://localhost:4566` with dummy c
                         Terraform (secure by default) ► scanner reports 0 findings
 ```
 
+### Article: [Build a cloud security scanner without touching a real AWS account](https://dev.to/axololtos_30/build-a-cloud-security-scanner-without-touching-a-real-aws-account-532p)
+
+### LinkedIn post: [Read the post](https://lnkd.in/p/gWzpYNma)
+
 ![Architecture](docs/architecture.png)
 
 Editable source: [docs/architecture.excalidraw](docs/architecture.excalidraw).
