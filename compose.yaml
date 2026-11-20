@@ -1,0 +1,9 @@
+# Used by 01-start-floci.ps1 only when nothing else already serves port 4566.
+services:
+  floci:
+    image: floci/floci:latest
+    user: root
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
