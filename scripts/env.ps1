@@ -5,7 +5,7 @@ $env:AWS_ACCESS_KEY_ID     = "test"
 $env:AWS_SECRET_ACCESS_KEY = "test"
 $env:AWS_PAGER             = ""     # stop the CLI pausing at "-- More --"
 
-$Root  = $PSScriptRoot
+$Root  = Split-Path $PSScriptRoot -Parent   # lab root (parent of scripts/)
 $Work  = Join-Path $Root "work"                 # generated files + reports
 $Venv  = Join-Path $Root ".venv"                # python venv holding boto3
 $Py    = Join-Path $Venv "Scripts\python.exe"

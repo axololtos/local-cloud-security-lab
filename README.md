@@ -14,6 +14,10 @@ No AWS account is used. Everything talks to `http://localhost:4566` with dummy c
                         Terraform (secure by default) ► scanner reports 0 findings
 ```
 
+![Architecture](docs/architecture.png)
+
+Editable source: [docs/architecture.excalidraw](docs/architecture.excalidraw).
+
 ## Requirements
 
 | Tool | Used for |
@@ -30,7 +34,7 @@ Tested on Windows 11, PowerShell 5.1, AWS CLI 2.39, Terraform 1.13 (AWS provider
 ## Quick start
 
 ```powershell
-cd cmd
+cd cmd\scripts
 Set-ExecutionPolicy -Scope Process Bypass   # once per PowerShell window
 .\01-start-floci.ps1
 .\02-baseline.ps1
@@ -53,7 +57,7 @@ Then continue with 05-08 below. If port 4566 is already served by another Floci 
 | 07 | `07-terraform.ps1` | Builds the secure version with Terraform and scans it | `BEFORE: 0 finding(s)` |
 | 08 | `08-cleanup.ps1` | Removes everything the lab created (`-StopFloci` also stops this folder's Floci) | no `sec-lab*` resources left |
 
-The scanner can also be run directly:
+Run the scripts from `cmd\scripts`. The scanner can also be run directly from `cmd`:
 
 ```powershell
 .venv\Scripts\python.exe scanner\scanner.py --prefix sec-lab [--fix --kms-key-id alias/sec-lab] [--report out.json]
@@ -96,8 +100,9 @@ Floci UI views captured during a run (all files in [docs/screenshots](docs/scree
 
 ```
 cmd/
-├── 01-…08-*.ps1        numbered steps, run in order
-├── env.ps1             shared settings and helpers (dot-sourced by every script)
+├── scripts/
+│   ├── 01-…08-*.ps1    numbered steps, run in order
+│   └── env.ps1         shared settings and helpers (dot-sourced by every script)
 ├── compose.yaml        Floci container, used only if nothing already serves :4566
 ├── scanner/scanner.py  the scanner and remediation logic
 ├── terraform/main.tf   the secure-by-default environment
