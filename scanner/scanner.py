@@ -122,6 +122,15 @@ def scan_role(iam, name):
         if p["PolicyName"] == "AdministratorAccess":
             out.append(finding("IAM-ADMIN-ATTACHED", "HIGH", res, "AdministratorAccess is attached",
                                lambda arn=p["PolicyArn"]: iam.detach_role_policy(RoleName=name, PolicyArn=arn)))
+
+    trust = iam.get_role(RoleName=name)["Role"]["AssumeRolePolicyDocument"]
+    if isinstance(trust, str):
+        trust = json.loads(unquote(trust))
+    if any(is_public_statement(s) for s in as_list(trust.get("Statement"))):
+        def fix_trust():
+            raise RuntimeError("restrict the trust policy Principal by hand")
+        out.append(finding("IAM-TRUST-WILDCARD", "HIGH", res,
+                           "trust policy lets any principal assume this role", fix_trust))
     return out
 
 

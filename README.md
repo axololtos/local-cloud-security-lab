@@ -80,6 +80,7 @@ It exits `1` when findings remain and `0` when clean, so it can gate a pipeline.
 | `S3-NO-VERSIONING` | LOW | Versioning is not `Enabled` | Enable versioning |
 | `IAM-WILDCARD-ACTION` | HIGH | Inline role policy `Allow` with `Action: "*"` | Delete that inline policy |
 | `IAM-ADMIN-ATTACHED` | HIGH | `AdministratorAccess` attached to a role | Detach it |
+| `IAM-TRUST-WILDCARD` | HIGH | Role trust policy `Allow` to `Principal: "*"` with no condition | None (reported only, restrict the Principal by hand) |
 
 Only buckets and roles whose names start with `--prefix` (default `sec-lab`) are touched, and an empty prefix is
 refused, so other resources on a shared emulator are left alone.
@@ -129,8 +130,9 @@ cmd/
 **Scanner heuristics**
 - Public-policy detection is simple: wildcard principal with no `Condition`. It ignores `NotPrincipal`, conditioned
   statements, access points and account-level Block Public Access.
-- IAM coverage is role inline policies plus `AdministratorAccess`. No users, groups, customer-managed policies,
-  `Resource: "*"` analysis, trust policies or permission boundaries.
+- IAM coverage is role inline policies, `AdministratorAccess` and wildcard-principal trust policies. No users, groups,
+  customer-managed policies, `Resource: "*"` analysis or permission boundaries. The trust-policy finding has no
+  automatic fix, so `--fix` reports it as `FAILED` and the scan exits `1` until you restrict the Principal.
 - The IAM fix deletes the offending policy (deny by default) and does not write a replacement. Real use needs a
   least-privilege policy, ideally derived from access logs.
 - New S3 buckets are SSE-S3 encrypted by default (as on AWS since 2023), so the encryption rule asks for a
